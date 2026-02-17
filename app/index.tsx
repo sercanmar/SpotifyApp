@@ -1,12 +1,5 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {  Text } from 'react-native'
-import { StatusBar } from 'expo-status-bar';
-const App = () => {
-    return (
-        <SafeAreaView>
-            <Text>App</Text>
-            <StatusBar style='dark' />
-        </SafeAreaView>
-    )
+import { Redirect } from 'expo-router';
+
+export default function Index() {
+  return <Redirect href="/(spotify-app)/(drawer)/(tabs)/(home)" />;
 }
-export default App;

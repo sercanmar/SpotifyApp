@@ -21,7 +21,7 @@ import {create} from 'zustand'
      login: async (email: string, password: string) => {
         const resp = await authLogin(email, password);
 
-        if (resp === "INVALIDO") {
+        if (resp === null) {
             set({ status: 'unauthenticated', user: undefined });
             return false;
         }
@@ -32,10 +32,27 @@ import {create} from 'zustand'
 
         return true;
     },
+    changeStatus: async (token?: string, user?: User) => {
+        if (!token || !user) {
+            set({ status: 'unauthenticated', token: undefined, user: undefined });
+     
+        //    await SecureStorageAdapter.deleteItem('token');
+            return false;
+        }
+
+        set({ status: 'authenticated', token: token, user: user });
+    
+      //  await SecureStorageAdapter.setItem('token', token);
+        return true;
+    },
 
      checkStatus: async () => {
      },
 
      logout: async () => {
-     },
+    // TODO: eliminar el token en secure storage
+
+    set({ status: 'unauthenticated', token: undefined, user: undefined });
+},
+
  }))

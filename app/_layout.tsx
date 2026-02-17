@@ -1,23 +1,17 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import "./global.css";
-import { Slot } from 'expo-router';
-import { useColorScheme } from '@/presentation/theme/hooks/use-color-scheme';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-<Stack screenOptions={{
-    headerShown: false,
-  }}>
-</Stack>
+const queryClient = new QueryClient();
 
 const RootLayout = () => {
-return <Slot/>;
+  return (
+
+    <QueryClientProvider client={queryClient}>
+      <Stack screenOptions={{ headerShown: false }} />
+    </QueryClientProvider>
+  )
 }
 
- export default RootLayout;
-
-
+export default RootLayout;

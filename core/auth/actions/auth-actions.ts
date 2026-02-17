@@ -1,4 +1,5 @@
 import { spotifyApi } from "@/core/api/spotify-api";
+import { User } from "@/core/auth/interface/user";
 
 export interface AuthResponse {
     username:        string;
@@ -18,10 +19,10 @@ export const authLogin = async (email: string, password: string) => {
     try {
         const { data } = await spotifyApi.post<AuthResponse>('/login', { email, password });
 
-        return data;
+        return { user: data, token: data.email };
     } catch (error) {
-        console.log(error);
-
-        return "INVALIDO";
+        
+        return null;
+    
     }
 };
