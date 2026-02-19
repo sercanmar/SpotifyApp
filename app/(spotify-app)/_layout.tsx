@@ -26,6 +26,7 @@ const CheckAuthenticationLayout = () => {
         // TODO: Guardar la ruta del usuario desde la que accede para redirigirle después de loguearse
         return <Redirect href="/auth/login" />;
     }
+    
 
     return (
         <Stack
@@ -38,20 +39,16 @@ const CheckAuthenticationLayout = () => {
                     backgroundColor: backgroundColor,
                 }
             }}>
-            <Stack.Screen
-                name="(home)/index"
-                options={{
-                    title: "Productos",
-                    headerLeft: () => <LogoutIconButton />
-                }}
-            />    
+            <Stack.Screen 
+                name="(drawer)" 
+                options={{ 
+                    title: "Inicio",
+                    headerLeft: () => <LogoutIconButton />,
+                    headerShown: true 
+                }} 
+            />
             
-            <Stack.Screen name="(drawer)" options={{ title: "Productos",headerShown: false 
-                
-            }} />
-            
-            
-            </Stack>
+        </Stack>
     )
 }
 

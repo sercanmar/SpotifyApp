@@ -11,7 +11,7 @@ export interface AuthState {
     user?: User;
 
     login: (email: string, password: string) => Promise<boolean>;
-    register: (email: string, password: string, username: string, fechaNacimiento: string) => Promise<boolean>; changeStatus: (token?: string, user?: User) => Promise<boolean>;
+    register: (email: string, password: string, username: string, fechaNacimiento: string) => Promise<boolean>; 
     changeStatus: (token?: string, user?: User) => Promise<boolean>;
     checkStatus: () => Promise<void>;
     logout: () => Promise<void>;
@@ -50,23 +50,19 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     },
 
     checkStatus: async () => {
-    const resp = await authCheckStatus();
+        const token = await SecureStorageAdapter.getItem('token');
 
-    if (!resp) {
-        set({ status: 'unauthenticated', token: undefined, user: undefined });
-        return;
-    }
+        if (!token) {
+            set({ status: 'unauthenticated', token: undefined, user: undefined });
+            return;
+        }
 
-    set({
-        status: 'authenticated',
-        token: resp.token,
-        user: resp.user
-    });
-
-    //TODO: guardar el token en secure storage
-
-    return;
-},
+        set({
+            status: 'authenticated',
+            token: token,
+            user: { email: token, username: 'Usuario' } as any
+        });
+    },
 
     logout: async () => {
         await SecureStorageAdapter.deleteItem('token');

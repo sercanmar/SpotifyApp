@@ -5,10 +5,9 @@ export const authCheckStatus = async (token: string) => {
     try {
         const { data } = await spotifyApi.get<AuthResponse>('/auth/check-status');
 
-        return returnUserToken(data);
+        return { user: data, token: data.email };
     } catch (error) {
         console.log(error);
-
         return null;
     }
 };
