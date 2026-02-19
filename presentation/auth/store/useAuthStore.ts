@@ -22,12 +22,14 @@ import {create} from 'zustand'
         const resp = await authLogin(email, password);
 
         if (resp === null) {
-            set({ status: 'unauthenticated', user: undefined });
+            set({ status: 'unauthenticated', user: undefined, token: undefined });
             return false;
         }
 
         set({
             status: 'authenticated',
+            user: resp.user as any,
+            token: resp.token
         });
 
         return true;
@@ -49,7 +51,7 @@ import {create} from 'zustand'
      checkStatus: async () => {
      },
 
-     logout: async () => {
+    logout: async () => {
     // TODO: eliminar el token en secure storage
 
     set({ status: 'unauthenticated', token: undefined, user: undefined });

@@ -8,8 +8,10 @@ import { useQuery } from '@tanstack/react-query';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
+import { Pressable } from 'react-native';
 
 export default function HomeScreen() {
+  
   const { data: playlists, isLoading, isError } = useQuery({
     queryKey: ['playlists'],
     queryFn: getPlaylistSeguidas,
@@ -46,12 +48,10 @@ navigation.dispatch(DrawerActions.toggleDrawer)
   }
   
   return (
-   <SafeAreaView className="flex-1 bg-white p-4">
-    <ThemedView className="flex-1 px-5 pt-12">
+   <SafeAreaView className="flex-1 bg-white ">
+    <ThemedView className="flex-1 px-5 ">
 
-      <View className="mb-8">
-        <ThemedText type="title">inicio</ThemedText>
-      </View>
+  
 
       {/* listas*/}
      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
