@@ -2,16 +2,38 @@ import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 import "./global.css";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useThemeColor } from '@/presentation/theme/hooks/use-theme-color';
+import { useColorScheme } from '@/presentation/theme/hooks/use-color-scheme.web';
+import { StatusBar } from 'expo-status-bar';
 
 const queryClient = new QueryClient();
 
-const RootLayout = () => {
-  return (
+export const unstable_settings = {
+  anchor: '(tabs)',
+};
 
+export default function RootLayout() {
+
+  const backgroundColor = useThemeColor({}, 'background');
+  const colorScheme = useColorScheme();
+
+  return (
+    <GestureHandlerRootView style={{
+      flex: 1,
+      backgroundColor: backgroundColor
+    }}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        
     <QueryClientProvider client={queryClient}>
       <Stack screenOptions={{ headerShown: false }} />
     </QueryClientProvider>
-  )
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </GestureHandlerRootView>
+  );
 }
 
-export default RootLayout;
+
+

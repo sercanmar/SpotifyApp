@@ -6,11 +6,12 @@ import { useRef, useState } from "react";
 interface Props extends TextInputProps {
     icon?: keyof typeof Ionicons.glyphMap
 }
-const primaryColor = useThemeColor({}, 'primary');
-const textColor = useThemeColor({}, 'text');
-const inputRef = useRef<TextInput>(null);
-const [isActive, setIsActive] = useState(false)
+
 const ThemedTextInput = ({ icon, ...rest }: Props) => {
+    const primaryColor = useThemeColor({}, 'primary');
+    const textColor = useThemeColor({}, 'text');
+    const inputRef = useRef<TextInput>(null);
+    const [isActive, setIsActive] = useState(false)
     return (
         <View style={{
             ...styles.border,

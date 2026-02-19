@@ -26,3 +26,22 @@ export const authLogin = async (email: string, password: string) => {
     
     }
 };
+export const authRegister = async (email: string, password: string, username: string, fechaNacimiento: string) => {
+    try {
+        const { data } = await spotifyApi.post('/usuarios', { 
+            username, 
+            password, 
+            email, 
+            fechaNacimiento 
+        });
+
+        return {
+            user: data,
+            token: data.email 
+        };
+
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
