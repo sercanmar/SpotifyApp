@@ -44,7 +44,7 @@ const CheckAuthenticationLayout = () => {
                 options={{ 
                     title: "Inicio",
                     headerLeft: () => <LogoutIconButton />,
-                    headerShown: true 
+                    headerShown: false 
                 }} 
             />
             

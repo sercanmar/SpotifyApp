@@ -46,7 +46,13 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
-      <ScrollView style={{ paddingHorizontal: 40, backgroundColor: backgroundColor }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 40,
+          backgroundColor: backgroundColor,
+          flexGrow: 1,
+        }}
+      >
         <View style={{ paddingTop: height * 0.35 }}>
           <ThemedText type='title'>Login</ThemedText>
         </View>

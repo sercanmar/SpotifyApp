@@ -1,3 +1,4 @@
+import { LogoutIconButton } from '@/presentation/auth/components/LogoutIconButton'
 import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import React from 'react'
 import { Text, View } from 'react-native'
@@ -13,6 +14,9 @@ rounded-xl bg-primary'>
             </View>
             {/* DrawerItems */}
             <DrawerItemList {...props} />
+            <View className="mt-10 border-t border-gray-700 pt-5">
+                <LogoutIconButton />
+            </View>
         </DrawerContentScrollView>
     )
 }

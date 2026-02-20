@@ -3,6 +3,7 @@ import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import CustomDrawer from '@/presentation/theme/components/shared/CustomDrawer';
+import { LogoutIconButton } from '@/presentation/auth/components/LogoutIconButton';
 
 const DrawerLayout = () => {
   return (
@@ -27,6 +28,10 @@ const DrawerLayout = () => {
           )
         }}
       />
+        
+               
+                 
+                 
         
       <Drawer.Screen
         name="configuracion/index"
@@ -59,6 +64,12 @@ const DrawerLayout = () => {
           )
         }}
       />
+      
+       
+           
+          
+
+      
       
       
     </Drawer>
