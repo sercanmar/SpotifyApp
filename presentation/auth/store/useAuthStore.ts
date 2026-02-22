@@ -50,8 +50,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     },
 
     checkStatus: async () => {
-        const token = await SecureStorageAdapter.getItem('token');
-
+      //  const token = await SecureStorageAdapter.getItem('token');
+        const token = 'token-falso-casa';
         if (!token) {
             set({ status: 'unauthenticated', token: undefined, user: undefined });
             return;

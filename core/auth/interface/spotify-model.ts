@@ -25,3 +25,16 @@ export interface Cancion {
   ruta: string;
   numeroReproducciones: number;
 }
+export interface Podcast {
+  id: number;
+  titulo: string;
+  imagen: string;
+  descripcion: string;
+  anyo: Date;
+}
+export interface Artista {
+  id: number;
+  nombre: string;
+  imagen: string;
+
+}

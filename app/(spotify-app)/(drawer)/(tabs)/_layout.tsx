@@ -35,7 +35,64 @@ const TabsLayout = () => {
           tabBarIcon: ({ color }) => <Ionicons size={28} name="library-outline" color={color} />,
         }}
       />
+       <Tabs.Screen
+        name="(anyadir)/index"
+        options={{
+          title: 'Añadir',
+          tabBarIcon: ({ color }) => <Ionicons size={28} name="add-circle-outline" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="(biblioteca)/(playlist)/index"
+        options={{
+          title: 'Añadir',
+          
+          tabBarIcon: ({ color }) => <Ionicons size={28} name="add-circle-outline" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="(biblioteca)/(playlist)/[id]"
+        options={{ href: null }}
+      />
+       <Tabs.Screen
+        name="(busqueda)/album/[id]"
+        options={{ href: null }}
+      />
+       <Tabs.Screen
+        name="(busqueda)/albumes/index"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(busqueda)/artistas/index"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(busqueda)/artista/[id]"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(busqueda)/playlist/[id]"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(busqueda)/capitulo/[id]"
+        options={{ href: null }}
+      />
+       <Tabs.Screen
+        name="(busqueda)/playlists/index"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(busqueda)/podcast/[id]"
+        options={{ href: null }}
+      />
+       <Tabs.Screen
+        name="(busqueda)/podcasts/index"
+        options={{ href: null }}
+      />
     </Tabs>
+    
   );
 }
 
