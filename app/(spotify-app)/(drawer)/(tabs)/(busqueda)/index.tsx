@@ -11,7 +11,7 @@ export default function BusquedaScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#121212]">
-      <ScrollView className="flex-1 px-4 pt-4">
+      <ScrollView className="flex-1 px-4">
         
         <ThemedText type='title' className="mb-6 text-white">Buscar</ThemedText>
         <View className="flex-row items-center bg-white rounded-md px-3 py-2 mb-6">

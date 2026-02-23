@@ -12,34 +12,44 @@ import {
   getPodcastsSeguidos, 
   getArtistasSeguidos 
 } from '@/core/auth/actions/spotify.action';
+import { router } from 'expo-router';
+import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
 
 export default function BibliotecaScreen() {
-  // guarda el boton pulsado
+  const { user } = useAuthStore();
+  const userId = user?.id?.toString() || '0';
+  
+
   const [filtro, setFiltro] = useState('playlists');
 
   const { data: playlists, isLoading: loadPlaylists } = useQuery({
-    queryKey: ['playlists'],
-    queryFn: getPlaylistSeguidas,
+    queryKey: ['playlists', userId],
+    queryFn: () => getPlaylistSeguidas(userId),
+    enabled: !!user?.id,
   });
 
   const { data: albumes, isLoading: loadAlbumes } = useQuery({
-    queryKey: ['albumes'],
-    queryFn: getAlbumesSeguidos,
+    queryKey: ['albumes', userId],
+    queryFn: () => getAlbumesSeguidos(userId),
+    enabled: !!user?.id,
   });
 
   const { data: canciones, isLoading: loadCanciones } = useQuery({
-    queryKey: ['canciones'],
-    queryFn: getCancionesSeguidas,
+    queryKey: ['canciones', userId],
+    queryFn: () => getCancionesSeguidas(userId),
+    enabled: !!user?.id,
   });
 
   const { data: podcasts, isLoading: loadPodcasts } = useQuery({
-    queryKey: ['podcasts'],
-    queryFn: getPodcastsSeguidos,
+    queryKey: ['podcasts', userId],
+    queryFn: () => getPodcastsSeguidos(userId),
+    enabled: !!user?.id,
   });
 
   const { data: artistas, isLoading: loadArtistas } = useQuery({
-    queryKey: ['artistas'],
-    queryFn: getArtistasSeguidos,
+    queryKey: ['artistas', userId],
+    queryFn: () => getArtistasSeguidos(userId),
+    enabled: !!user?.id,
   });
 
   // elige que lista devolver
@@ -59,20 +69,17 @@ export default function BibliotecaScreen() {
     return [];
   };
 
-
-  if (loadPlaylists || loadAlbumes || loadCanciones || loadPodcasts || loadArtistas) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#1DB954" />
-      </View>
-    );
-  }
-
   const renderItem = ({ item }: { item: any }) => {
-    // pinta la tarjeta azul de me gusta
+
     if (item.especial) {
       return (
-        <Pressable className="flex-row items-center mb-5">
+         <Pressable className="flex-row items-center mb-5"
+      onPress={() => {
+          if (filtro === 'playlists') {
+            router.push(`/(biblioteca)/(canciones)/${item.id}` as any);
+          }
+        }}
+        >
           <View className="w-16 h-16 bg-blue-600 justify-center items-center rounded-md">
             <Ionicons name="heart" size={30} color="white" />
           </View>
@@ -84,22 +91,21 @@ export default function BibliotecaScreen() {
       );
     }
 
-    // saca el nombre si no tiene titulo
     const tituloItem = item.nombre ? item.nombre : item.titulo;
     
     let icono = "musical-notes";
     let contenedorClase = "w-16 h-16 bg-[#333333] justify-center items-center rounded-md";
-    
-    // cambia el icono y pone borde redondo si es artista
-    if (filtro === 'artistas') {
-      icono = "person";
-      contenedorClase = "w-16 h-16 bg-[#333333] justify-center items-center rounded-full";
-    } else if (filtro === 'podcasts') {
-      icono = "mic";
-    }
+
+   
 
     return (
-      <Pressable className="flex-row items-center mb-5">
+      <Pressable className="flex-row items-center mb-5"
+      onPress={() => {
+          if (filtro === 'playlists') {
+            router.push(`/(biblioteca)/(playlist)/${item.id}` as any);
+          }
+        }}
+        >
         <View className={contenedorClase}>
           <Ionicons name={icono as any} size={30} color="white" />
         </View>
@@ -113,7 +119,7 @@ export default function BibliotecaScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-black">
-      <ThemedView className="flex-1 px-5 pt-5">
+      <ThemedView className="flex-1 px-5">
         
         <View className="flex-row items-center mb-5">
           <ThemedText type='title'>Tu biblioteca</ThemedText>

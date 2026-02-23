@@ -9,20 +9,29 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
 import { Pressable } from 'react-native';
+import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
 
 export default function HomeScreen() {
-  
-  const { data: playlists, isLoading, isError } = useQuery({
-    queryKey: ['playlists'],
-    queryFn: getPlaylistSeguidas,
+  const { user } = useAuthStore();
+  const userId = user?.id?.toString() || '0';
+
+const { data: playlists, isLoading, isError } = useQuery({
+    queryKey: ['playlists', userId],
+    
+    queryFn: () => getPlaylistSeguidas(userId),
+    enabled: !!user?.id,
   });
+
   const { data: albumes, isLoading: isLoadingAlbumes, isError: isErrorAlbumes } = useQuery({
-    queryKey: ['albumes'],
-    queryFn: getAlbumesSeguidos,
+    queryKey: ['albumes', userId],
+    queryFn: () => getAlbumesSeguidos(userId),
+    enabled: !!user?.id,
   });
+
   const { data: canciones, isLoading: isLoadingCanciones, isError: isErrorCanciones } = useQuery({
-    queryKey: ['canciones'],
-    queryFn: getCancionesSeguidas,
+    queryKey: ['canciones', userId],
+    queryFn: () => getCancionesSeguidas(userId),
+    enabled: !!user?.id,
   });
 
   const navigation = useNavigation();

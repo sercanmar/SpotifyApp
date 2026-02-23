@@ -24,14 +24,14 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     user: undefined,
 
     // Actions
-    login: async (email: string, password: string) => {
+   login: async (email: string, password: string) => {
         const resp = await authLogin(email, password);
-        return get().changeStatus(resp?.token, resp?.user);
+        return get().changeStatus(resp?.token, resp?.user as User);
     },
 
     register: async (email: string, password: string, username: string, fechaNacimiento: string) => {
         const resp = await authRegister(email, password, username, fechaNacimiento);
-        return get().changeStatus(resp?.token, resp?.user);
+        return get().changeStatus(resp?.token, resp?.user as User);
     },
 
     changeStatus: async (token?: string, user?: User) => {
@@ -39,20 +39,33 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
             set({ status: 'unauthenticated', token: undefined, user: undefined });
 
             await SecureStorageAdapter.deleteItem('token');
+            await SecureStorageAdapter.deleteItem('user');
             return false;
         }
 
         set({ status: 'authenticated', token: token, user: user });
 
         await SecureStorageAdapter.setItem('token', token);
+        await SecureStorageAdapter.setItem('user', JSON.stringify(user));
 
         return true;
     },
 
     checkStatus: async () => {
-      //  const token = await SecureStorageAdapter.getItem('token');
-        const token = 'token-falso-casa';
-        if (!token) {
+        const token = await SecureStorageAdapter.getItem('token');
+        const userString = await SecureStorageAdapter.getItem('user');
+        //const token = 'token-falso-casa';
+
+
+        let parsedUser = null;
+        if (userString) {
+            parsedUser = JSON.parse(userString);
+        }
+        
+        
+        if (!token || !parsedUser) {
+            await SecureStorageAdapter.deleteItem('token');
+            await SecureStorageAdapter.deleteItem('user');
             set({ status: 'unauthenticated', token: undefined, user: undefined });
             return;
         }
@@ -60,12 +73,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         set({
             status: 'authenticated',
             token: token,
-            user: { email: token, username: 'Usuario' } as any
+            user: parsedUser
         });
     },
 
     logout: async () => {
         await SecureStorageAdapter.deleteItem('token');
+        await SecureStorageAdapter.deleteItem('user');
         set({ status: 'unauthenticated', token: undefined, user: undefined });
     },
 
