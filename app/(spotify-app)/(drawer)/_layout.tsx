@@ -21,7 +21,7 @@ const DrawerLayout = () => {
         name="(tabs)"
         options={{
           drawerLabel: 'Inicio',
-          drawerItemStyle: { display: 'none' },
+          
           title: 'Inicio',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='home-outline' color={color} size={size} />

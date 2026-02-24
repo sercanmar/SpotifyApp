@@ -38,6 +38,15 @@ export const authCheckStatus = async () => {
     }
 };
 
+export const putPerfil = async (id: string, username: string, email: string) => {
+    try {
+        const { data } = await spotifyApi.put(`/usuarios/${id}`, { username, email });
+        return { ok: true, user: data };
+    } catch (error) {
+        return { ok: false };
+    }
+};
+
 export const authRegister = async (email: string, password: string, username: string, fechaNacimiento: string) => {
     try {
        
