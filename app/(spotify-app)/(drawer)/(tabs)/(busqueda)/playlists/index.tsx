@@ -4,12 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { getPlaylists } from '@/core/auth/actions/spotify.action';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/presentation/theme/components/themed-text';
 import { Stack, router } from 'expo-router';
 
 export default function PlaylistsScreen() {
   const { data: playlists, isLoading, isError } = useQuery({
-    queryKey: ['todos-playlists'],
+    queryKey: ['todos-playlists-limpios'],
     queryFn: getPlaylists,
   });
 
@@ -29,9 +28,10 @@ export default function PlaylistsScreen() {
     );
   }
 
+  const listaSegura = Array.isArray(playlists) ? playlists.slice(0, 20) : [];
+
   return (
     <SafeAreaView className="flex-1 bg-[#121212]">
-
       <Stack.Screen 
         options={{ 
           title: 'Playlists', 
@@ -43,20 +43,22 @@ export default function PlaylistsScreen() {
 
       <View className="px-5 pt-4 flex-1">
         <FlatList
-          data={playlists}
-          keyExtractor={(item) => item.id.toString()}
+          data={listaSegura}
+          keyExtractor={(item, index) => item?.id ? item.id.toString() : index.toString()}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <Pressable 
               className="flex-row items-center mb-5"
-              onPress={() => router.push(`/(busqueda)/playlist/${item.id}` as any)}
+              onPress={() => router.push(`/(busqueda)/playlist/${item?.id || index}` as any)}
             >
               <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-full">
-                <Ionicons name="person" size={30} color="white" />
+                <Ionicons name="musical-notes" size={30} color="white" />
               </View>
               <View className="ml-4 flex-1">
-                <ThemedText className="text-lg font-bold text-white" numberOfLines={1}>{item.titulo}</ThemedText>
-                <ThemedText className="text-gray-500">playlist</ThemedText>
+                <Text className="text-lg font-bold text-white" numberOfLines={1}>
+                  {item?.titulo}
+                </Text>
+                <Text className="text-gray-500">playlist</Text>
               </View>
             </Pressable>
           )}

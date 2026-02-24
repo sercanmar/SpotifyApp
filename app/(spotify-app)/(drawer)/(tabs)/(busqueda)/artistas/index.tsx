@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { getArtistas } from '@/core/auth/actions/spotify.action';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/presentation/theme/components/themed-text';
 import { Stack, router } from 'expo-router';
 
 export default function ArtistasScreen() {
@@ -29,9 +28,10 @@ export default function ArtistasScreen() {
     );
   }
 
+  const listaSegura = Array.isArray(artistas) ? artistas.slice(0, 20) : [];
+
   return (
     <SafeAreaView className="flex-1 bg-[#121212]">
-
       <Stack.Screen 
         options={{ 
           title: 'Artistas', 
@@ -43,20 +43,23 @@ export default function ArtistasScreen() {
 
       <View className="px-5 pt-4 flex-1">
         <FlatList
-          data={artistas}
-          keyExtractor={(item) => item.id.toString()}
+          data={listaSegura}
+          keyExtractor={(item, index) => item?.id ? item.id.toString() : index.toString()}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <Pressable 
               className="flex-row items-center mb-5"
-              onPress={() => router.push(`/(busqueda)/artista/${item.id}` as any)}
+              onPress={() => router.push(`/(busqueda)/artista/${item?.id || index}` as any)}
             >
               <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-full">
                 <Ionicons name="person" size={30} color="white" />
               </View>
               <View className="ml-4 flex-1">
-                <ThemedText className="text-lg font-bold text-white" numberOfLines={1}>{item.nombre}</ThemedText>
-                <ThemedText className="text-gray-500">artista</ThemedText>
+      
+                <Text className="text-lg font-bold text-white" numberOfLines={1}>
+                  {item?.nombre}
+                </Text>
+                <Text className="text-gray-500">artista</Text>
               </View>
             </Pressable>
           )}

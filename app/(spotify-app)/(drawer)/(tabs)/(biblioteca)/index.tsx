@@ -104,6 +104,15 @@ export default function BibliotecaScreen() {
           if (filtro === 'playlists') {
             router.push(`/(biblioteca)/(playlist)/${item.id}` as any);
           }
+          if (filtro === 'podcasts') {
+            router.push(`/(biblioteca)/(podcast)/${item.id}` as any);
+          }
+          if (filtro === 'albumes') {
+            router.push(`/(biblioteca)/(album)/${item.id}` as any);
+          }
+          if (filtro === 'artistas') {
+            router.push(`/(biblioteca)/(artista)/${item.id}` as any);
+          }
         }}
         >
         <View className={contenedorClase}>
@@ -125,7 +134,6 @@ export default function BibliotecaScreen() {
           <ThemedText type='title'>Tu biblioteca</ThemedText>
         </View>
 
-        {/* lista de botones de arriba */}
         <View className="mb-5">
           <FlatList
             horizontal

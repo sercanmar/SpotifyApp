@@ -38,3 +38,12 @@ export interface Artista {
   imagen: string;
 
 }
+
+export interface Capitulo {
+  id:                   number;
+  titulo:               string;
+  descripcion:          string;
+  duracion:             number;
+  fecha:                Date;
+  numeroReproducciones: number;
+}

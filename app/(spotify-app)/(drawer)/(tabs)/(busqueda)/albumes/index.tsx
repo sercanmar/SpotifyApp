@@ -4,12 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 import { getAlbumes } from '@/core/auth/actions/spotify.action';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from '@/presentation/theme/components/themed-text';
 import { Stack, router } from 'expo-router';
 
 export default function AlbumesScreen() {
   const { data: albumes, isLoading, isError } = useQuery({
-    queryKey: ['todos-albumes'],
+    queryKey: ['todos-albumes-limpios'],
     queryFn: getAlbumes,
   });
 
@@ -29,12 +28,13 @@ export default function AlbumesScreen() {
     );
   }
 
+  const listaSegura = Array.isArray(albumes) ? albumes.slice(0, 20) : [];
+
   return (
     <SafeAreaView className="flex-1 bg-[#121212]">
-
       <Stack.Screen 
         options={{ 
-          title: 'Albumes', 
+          title: 'Álbumes', 
           headerTintColor: 'white', 
           headerStyle: { backgroundColor: '#121212' }, 
           headerBackTitle: '' 
@@ -43,20 +43,22 @@ export default function AlbumesScreen() {
 
       <View className="px-5 pt-4 flex-1">
         <FlatList
-          data={albumes}
-          keyExtractor={(item) => item.id.toString()}
+          data={listaSegura}
+          keyExtractor={(item, index) => item?.id ? item.id.toString() : index.toString()}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <Pressable 
               className="flex-row items-center mb-5"
-              onPress={() => router.push(`/(busqueda)/album/${item.id}` as any)}
+              onPress={() => router.push(`/(busqueda)/album/${item?.id || index}` as any)}
             >
               <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-full">
-                <Ionicons name="person" size={30} color="white" />
+                <Ionicons name="disc" size={30} color="white" />
               </View>
               <View className="ml-4 flex-1">
-                <ThemedText className="text-lg font-bold text-white" numberOfLines={1}>{item.titulo}</ThemedText>
-                <ThemedText className="text-gray-500">album</ThemedText>
+                <Text className="text-lg font-bold text-white" numberOfLines={1}>
+                  {item?.titulo}
+                </Text>
+                <Text className="text-gray-500">álbum</Text>
               </View> 
             </Pressable>
           )}

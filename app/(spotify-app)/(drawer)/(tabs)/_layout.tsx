@@ -55,6 +55,18 @@ const TabsLayout = () => {
         name="(biblioteca)/(playlist)/[id]"
         options={{ href: null }}
       />
+      <Tabs.Screen
+        name="(biblioteca)/(album)/[id]"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(biblioteca)/(podcast)/[id]"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="(biblioteca)/(artista)/[id]"
+        options={{ href: null }}
+      />
        <Tabs.Screen
         name="(biblioteca)/(canciones)/[id]"
         options={{ href: null }}

@@ -1,5 +1,5 @@
 import { spotifyApi } from "@/core/api/spotify-api";
-import { Playlist, Album, Cancion, Podcast, Artista } from "../interface/spotify-model";
+import { Playlist, Album, Cancion, Podcast, Artista, Capitulo } from "../interface/spotify-model";
 
 export const getPlaylistSeguidas = async (userId: string): Promise<Playlist[]> => {
   const { data } = await spotifyApi.get<Playlist[]>(`/usuarios/${userId}/playlists-seguidas`);
@@ -38,21 +38,37 @@ export const getCancionesPlaylist = async (id: string): Promise<Cancion[]> => {
 };
 
 export const getPlaylists = async (): Promise<Playlist[]> => {
-  const { data } = await spotifyApi.get<Playlist[]>('/playlists');
-  return data;
+  const { data } = await spotifyApi.get<any>('/playlists');
+  return typeof data === 'string' ? JSON.parse(data) : data;
 };
 
 export const getArtistas = async (): Promise<Artista[]> => {
-  const { data } = await spotifyApi.get<Artista[]>('/artistas');
-  return data;
+  const { data } = await spotifyApi.get<any>('/artistas');
+  return typeof data === 'string' ? JSON.parse(data) : data;
 };
 
 export const getPodcasts = async (): Promise<Podcast[]> => {
-  const { data } = await spotifyApi.get<Podcast[]>('/podcasts');
-  return data;
+  const { data } = await spotifyApi.get<any>('/podcasts');
+  return typeof data === 'string' ? JSON.parse(data) : data;
+};
+export const getCapitulosPodcast = async (id: string): Promise<Capitulo[]> => {
+  const { data } = await spotifyApi.get<any>(`/podcasts/${id}/capitulos`);
+  return typeof data === 'string' ? JSON.parse(data) : data;
 };
 
+
 export const getAlbumes = async (): Promise<Album[]> => {
-  const { data } = await spotifyApi.get<Album[]>('/albums');
-  return data;
+  const { data } = await spotifyApi.get<any>('/albums');
+  return typeof data === 'string' ? JSON.parse(data) : data;
+};
+
+export const getCancionesAlbum = async (id: string): Promise<Cancion[]> => {
+  const { data } = await spotifyApi.get<any>(`/albums/${id}/canciones`);  
+  return typeof data === 'string' ? JSON.parse(data) : data;
+};
+
+export const getArtistaAlbum = async (id: string): Promise<Album[]> => {
+  const { data } = await spotifyApi.get<any>(`/artistas/${id}/albums`);
+  
+  return typeof data === 'string' ? JSON.parse(data) : data;
 };
