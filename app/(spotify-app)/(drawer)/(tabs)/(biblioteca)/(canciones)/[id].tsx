@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { ActivityIndicator, FlatList, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { getCancionesSeguidas } from '@/core/auth/actions/spotify.action';
 import { ThemedText } from '@/presentation/theme/components/themed-text';
 import React from 'react';
 import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function CancionesScreen() {
   // saca el id del usuario real logueado, no de la url
@@ -40,11 +41,19 @@ export default function CancionesScreen() {
           title: 'Canciones', 
           headerBackTitle: '',
           headerTintColor: 'white', 
-          headerStyle: { backgroundColor: '#121212' } 
+          headerStyle: { backgroundColor: '#1DB954' } 
         }} 
       />
+    
 
       <View className="px-5 pt-4 flex-1">
+       <TouchableOpacity
+                    className="flex-row items-center"
+                    onPress={() => router.back()}
+                  >
+                    <Ionicons name="arrow-back" size={28} color="white" />
+                  </TouchableOpacity>
+               <ThemedText type='title' className="mb-6">Canciones</ThemedText>
         <ThemedText type='title' className="mb-6">Canciones</ThemedText>
 
         <FlatList

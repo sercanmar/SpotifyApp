@@ -17,9 +17,6 @@ export const authLogin = async (email: string, password: string) => {
 
     try {
         const { data } = await spotifyApi.post<AuthResponse>('/login', { email, password });
-        if (!data.id) {
-            data.id = "50"; 
-        }
         
         return { user: data, token: data.email };
     } catch (error) {
@@ -37,6 +34,10 @@ export const authCheckStatus = async () => {
         return null;
     }
 };
+export const getPerfil = async (id: string) => {
+    const { data } = await spotifyApi.get(`/usuarios/${id}`);
+    return typeof data === 'string' ? JSON.parse(data) : data;
+};
 
 export const putPerfil = async (id: string, username: string, email: string) => {
     try {
@@ -46,6 +47,29 @@ export const putPerfil = async (id: string, username: string, email: string) => 
         return { ok: false };
     }
 };
+
+export const getConfiguracion = async (id: string) => {
+    const { data } = await spotifyApi.get(`/usuarios/${id}/configuracion`);
+    return typeof data === 'string' ? JSON.parse(data) : data;
+};
+
+export const putConfig = async (id: string, configuracion: any) => {
+    try {
+        const { data } = await spotifyApi.put(`/usuarios/${id}/configuracion`, configuracion);
+        return { ok: true, user: data };
+    } catch (error) {
+        return { ok: false };
+    }
+};
+export const getSuscripciones = async (id: string) => {
+    try {
+        const { data } = await spotifyApi.get(`/suscripciones/${id}`);
+        return typeof data === 'string' ? JSON.parse(data) : data;
+    } catch (error) {
+        return null;
+    }
+};
+
 
 export const authRegister = async (email: string, password: string, username: string, fechaNacimiento: string) => {
     try {

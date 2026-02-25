@@ -1,23 +1,20 @@
 import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, ScrollView, Pressable, Image } from 'react-native';
 import { ThemedText } from '@/presentation/theme/components/themed-text';
 import { ThemedView } from '@/presentation/theme/components/themed-view';
-import { Link, useNavigation } from 'expo-router';
+import { Link, useNavigation, router } from 'expo-router';
 import { getAlbumesSeguidos, getCancionesSeguidas, getPlaylistSeguidas } from '@/core/auth/actions/spotify.action';
 import { useQuery } from '@tanstack/react-query';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
-import { Pressable } from 'react-native';
 import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
 
 export default function HomeScreen() {
   const { user } = useAuthStore();
   const userId = user?.id?.toString() || '0';
 
-const { data: playlists, isLoading, isError } = useQuery({
+  const { data: playlists, isLoading, isError } = useQuery({
     queryKey: ['playlists', userId],
-    
     queryFn: () => getPlaylistSeguidas(userId),
     enabled: !!user?.id,
   });
@@ -35,9 +32,9 @@ const { data: playlists, isLoading, isError } = useQuery({
   });
 
   const navigation = useNavigation();
-const onToogleDrawer = () => {
-navigation.dispatch(DrawerActions.toggleDrawer)
-}
+  const onToogleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer)
+  }
 
   if (isLoading) {
     return (
@@ -60,9 +57,6 @@ navigation.dispatch(DrawerActions.toggleDrawer)
    <SafeAreaView className="flex-1 bg-white ">
     <ThemedView className="flex-1 px-5 ">
 
-  
-
-      {/* listas*/}
      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
         
         <View className="mb-8">
@@ -76,24 +70,28 @@ navigation.dispatch(DrawerActions.toggleDrawer)
             contentContainerStyle={{ gap: 16 }}
             renderItem={({ item }) => (
               
-              <View className="w-32 bg-[#2A2A2A] rounded-md overflow-hidden pb-3">
-                <View className="w-32 h-32 bg-zinc-700 justify-center items-center">
-                  <Ionicons name="musical-notes" size={40} color="#A1A1AA" />
-                </View>
+              <Pressable 
+                className="w-32 bg-[#2A2A2A] rounded-md overflow-hidden pb-3"
+                onPress={() => router.push(`/(biblioteca)/(playlist)/${item.id}` as any)}
+              >
+                <Image 
+                  source={require('@/assets/images/icon.png')} 
+                  className="w-32 h-32" 
+                />
                 <Text 
                   className="text-white font-bold mt-3 ml-2 text-sm pr-2"
                   numberOfLines={1}
                 >
                   {item.titulo}
                 </Text>
-              </View>
+              </Pressable>
 
             )}
           />
         </View>
           
 
-               <View className="mb-8">
+        <View className="mb-8">
           <Text className="text-black text-xl font-bold mb-4">Tus Albumse</Text>
           
           <FlatList
@@ -104,19 +102,21 @@ navigation.dispatch(DrawerActions.toggleDrawer)
             contentContainerStyle={{ gap: 16 }}
             renderItem={({ item }) => (
               
-              <View className="w-32 bg-[#2A2A2A] rounded-md overflow-hidden pb-3">
-                <View className="w-32 h-32 bg-zinc-700 justify-center items-center">
-                  <Ionicons name="musical-notes" size={40} color="#A1A1AA" />
-                </View>
+              <Pressable 
+                className="w-32 bg-[#2A2A2A] rounded-md overflow-hidden pb-3"
+                onPress={() => router.push(`/(biblioteca)/(album)/${item.id}` as any)}
+              >
+                <Image 
+                  source={require('@/assets/images/icon.png')} 
+                  className="w-32 h-32" 
+                />
                 <Text 
                   className="text-white font-bold mt-3 ml-2 text-sm pr-2"
                   numberOfLines={1}
                 >
                   {item.titulo}
                 </Text>
-              </View>
-
-              
+              </Pressable>
 
             )}
           />
@@ -134,24 +134,25 @@ navigation.dispatch(DrawerActions.toggleDrawer)
             contentContainerStyle={{ gap: 16 }}
             renderItem={({ item }) => (
               
-              <View className="flex-1 bg-[#2A2A2A] rounded-md overflow-hidden pb-3">
-                <View className="w-full h-32 bg-zinc-700 justify-center items-center">
-                  <Ionicons name="musical-notes" size={60} color="#A1A1AA" />
-                </View>
+              <Pressable 
+                className="flex-1 bg-[#2A2A2A] rounded-md overflow-hidden pb-3"
+                onPress={() => router.push(`/(biblioteca)/(canciones)/${item.id}` as any)}
+              >
+                <Image 
+                  source={require('@/assets/images/icon.png')} 
+                  className="w-full h-32" 
+                />
                 <Text 
                   className="text-white font-bold mt-3 ml-2 text-sm pr-2"
                   numberOfLines={1}
                 >
                   {item.titulo}
                 </Text>
-              </View>
+              </Pressable>
 
             )}
           />
         </View>
-
-
-
 
       </ScrollView>
 

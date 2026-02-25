@@ -5,6 +5,7 @@ import { getCapitulosPodcast } from '@/core/auth/actions/spotify.action';
 import { ThemedText } from '@/presentation/theme/components/themed-text';
 import React from 'react';
 import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function PodcastScreen() {
    const { id } = useLocalSearchParams();
@@ -40,9 +41,16 @@ export default function PodcastScreen() {
           title: 'Podcast', 
           headerBackTitle: '',
           headerTintColor: 'white', 
-          headerStyle: { backgroundColor: '#121212' } 
+          headerStyle: { backgroundColor: '#1DB954' } 
         }} 
       />
+      <TouchableOpacity
+                   className="flex-row items-center"
+                   onPress={() => router.back()}
+                 >
+                   <Ionicons name="arrow-back" size={28} color="white" />
+                 </TouchableOpacity>
+              <ThemedText type='title' className="mb-6">Canciones</ThemedText>
 
       <View className="px-5 flex-1">
         <ThemedText type='title' className="mb-6">Capitulos</ThemedText>

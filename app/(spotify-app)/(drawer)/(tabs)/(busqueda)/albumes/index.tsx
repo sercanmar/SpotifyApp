@@ -36,7 +36,7 @@ export default function AlbumesScreen() {
         options={{ 
           title: 'Álbumes', 
           headerTintColor: 'white', 
-          headerStyle: { backgroundColor: '#121212' }, 
+          headerStyle: { backgroundColor: '#1DB954' },
           headerBackTitle: '' 
         }} 
       />

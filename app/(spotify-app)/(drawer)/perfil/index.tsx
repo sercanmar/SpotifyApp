@@ -1,24 +1,57 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
-import { putPerfil } from '@/core/auth/actions/auth-actions';
+import { putPerfil, getPerfil } from '@/core/auth/actions/auth-actions';
+import { useQuery } from '@tanstack/react-query';
 
 const PerfilScreen = () => {
-  const { user, token, changeStatus } = useAuthStore();
+  const { user, checkStatus } = useAuthStore();
+  const userId = user?.id?.toString() || '0';
 
-  const [nombre, setNombre] = useState(user?.username || '');
-  const [email, setEmail] = useState(user?.email || '');
+  const { data: perfilServer, isLoading, isError } = useQuery({
+    queryKey: ['perfil-usuario', userId],
+    queryFn: () => getPerfil(userId),
+    enabled: !!user?.id,
+  });
+
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    if (perfilServer) {
+      setNombre(perfilServer.username || '');
+      setEmail(perfilServer.email || '');
+    }
+  }, [perfilServer]);
 
   const guardarCambios = async () => {
     if (!user?.id) return;
-    const resp = await putPerfil(user.id.toString(), nombre, email);
+    
+    const resp = await putPerfil(userId, nombre, email);
+    
     if (resp.ok) {
-      changeStatus(token, { ...user, username: nombre, email: email });
+      await checkStatus();
       Alert.alert('listo', 'perfil guardado correctamente');
     } else {
       Alert.alert('error', 'no se han podido guardar los cambios');
     }
   };
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 bg-[#121212] justify-center items-center">
+        <ActivityIndicator size="large" color="#1DB954" />
+      </View>
+    );
+  }
+
+  if (isError) {
+    return (
+      <View className="flex-1 bg-[#121212] justify-center items-center">
+        <Text className="text-red-500">error al cargar el perfil</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-[#121212] p-5">

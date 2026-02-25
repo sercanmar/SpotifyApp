@@ -13,7 +13,7 @@ export default function BusquedaScreen() {
     <SafeAreaView className="flex-1 bg-[#121212]">
       <ScrollView className="flex-1 px-4">
         
-        <ThemedText type='title' className="mb-6 text-white">Buscar</ThemedText>
+        <ThemedText type='title' className="text-white">Buscar</ThemedText>
         <View className="flex-row items-center bg-white rounded-md px-3 py-2 mb-6">
           <Ionicons name="search" size={24} color="black" />
           <TextInput

@@ -1,8 +1,6 @@
-import { Pressable, PressableProps, Text, } from "react-native";
-import { create } from "zustand";
-import { useThemeColor } from "../hooks/use-theme-color";
+import { Pressable, PressableProps, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet } from "react-native";
+import React from "react";
 
 interface Props extends PressableProps {
     children: string;
@@ -13,22 +11,17 @@ const ThemedButton = ({ children, icon, ...rest }: Props) => {
 
     return (
         <Pressable
-            style={({ pressed }) => [
-                {
-                    backgroundColor: pressed ? '#00000090' : '#000000',
-                },
-                styles.button
-            ]}
+            className="w-full px-3 py-4 rounded-full items-center flex-row justify-center bg-[#1DB954] active:bg-[#1ed760]"
             {...rest}
         >
-            <Text style={{ color: 'black' }}>{children}</Text>
+            <Text className="text-black font-bold">{children}</Text>
 
             {icon && (
                 <Ionicons
                     name={icon}
                     size={24}
                     color='black'
-                    style={{ marginHorizontal: 10 }}
+                    className="mx-2"
                 />
             )}
         </Pressable>
@@ -36,17 +29,3 @@ const ThemedButton = ({ children, icon, ...rest }: Props) => {
 }
 
 export default ThemedButton;
-
-const styles = StyleSheet.create({
-    button: {
-        borderWidth: 2,
-borderColor: 'red',
-        width: '100%',          
-        paddingHorizontal: 10,
-        paddingVertical: 15,
-        borderRadius: 5,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-});
