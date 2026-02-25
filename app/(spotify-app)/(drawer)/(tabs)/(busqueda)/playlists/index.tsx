@@ -48,10 +48,10 @@ export default function PlaylistsScreen() {
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <Pressable 
-              className="flex-row items-center mb-5"
-              onPress={() => router.push(`/(busqueda)/playlist/${item?.id || index}` as any)}
+              className="flex-row items-center mb-5 active:bg-zinc-800 p-2 rounded-md"
+              onPress={() => router.push(`/(biblioteca)/(playlist)/${item?.id || index}` as any)}
             >
-              <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-full">
+              <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-md">
                 <Ionicons name="musical-notes" size={30} color="white" />
               </View>
               <View className="ml-4 flex-1">

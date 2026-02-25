@@ -8,7 +8,7 @@ import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function CancionesScreen() {
-  // saca el id del usuario real logueado, no de la url
+  // coge el id del usuario
   const { user } = useAuthStore();
   const userId = user?.id?.toString() || '0';
 
@@ -45,16 +45,14 @@ export default function CancionesScreen() {
         }} 
       />
     
-
-      <View className="px-5 pt-4 flex-1">
-       <TouchableOpacity
-                    className="flex-row items-center"
-                    onPress={() => router.back()}
-                  >
-                    <Ionicons name="arrow-back" size={28} color="white" />
-                  </TouchableOpacity>
-               <ThemedText type='title' className="mb-6">Canciones</ThemedText>
-        <ThemedText type='title' className="mb-6">Canciones</ThemedText>
+      <View className="px-5 flex-1 mt-2">
+        <TouchableOpacity
+          className="flex-row items-center mb-4"
+          onPress={() => router.back()}
+        >
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
+        <ThemedText type='title' className="mb-4">Canciones guardadas</ThemedText>
 
         <FlatList
           data={canciones}
@@ -65,12 +63,14 @@ export default function CancionesScreen() {
               <Text className="text-white text-lg font-bold">no hay canciones guardadas</Text>
             </View>
           )}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity className="flex-row items-center mb-4 active:bg-zinc-800 p-2 rounded">
+          renderItem={({ item }) => (
+            <TouchableOpacity className="flex-row items-center mb-5 active:bg-zinc-800 p-2 rounded-md">
               
-              <Text className="text-gray-400 mr-4 font-bold">{index + 1}</Text>
+              <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-md">
+                <Ionicons name="musical-notes" size={30} color="white" />
+              </View>
 
-              <View className="flex-1">
+              <View className="ml-4 flex-1">
                 <Text className="text-white text-lg font-bold" numberOfLines={1}>{item?.titulo || 'sin título'}</Text>
                 <Text className="text-gray-400 text-sm">canción</Text>
               </View>

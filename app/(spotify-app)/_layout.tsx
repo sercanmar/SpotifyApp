@@ -2,6 +2,7 @@ import { useAuthStore } from "@/presentation/auth/store/useAuthStore";
 import { useThemeColor } from "@/presentation/theme/hooks/use-theme-color";
 import { Redirect, Stack } from "expo-router";
 import { useEffect } from "react";
+import React from "react";
 import { ActivityIndicator, Text, View } from "react-native"
 import {LogoutIconButton} from '@/presentation/auth/components/LogoutIconButton'
 const CheckAuthenticationLayout = () => {
@@ -28,26 +29,24 @@ const CheckAuthenticationLayout = () => {
     }
     
 
-    return (
+   return (
         <Stack
             screenOptions={{
                 headerShadowVisible: false,
                 headerStyle: {
-                    backgroundColor: backgroundColor,
+                    backgroundColor: '#121212', 
                 },
+                headerTintColor: '#FFFFFF', 
                 contentStyle: {
-                    backgroundColor: backgroundColor,
+                    backgroundColor: '#121212', 
                 }
             }}>
             <Stack.Screen 
                 name="(drawer)" 
                 options={{ 
-                    title: "Inicio",
-                    headerLeft: () => <LogoutIconButton />,
                     headerShown: false 
                 }} 
             />
-            
         </Stack>
     )
 }

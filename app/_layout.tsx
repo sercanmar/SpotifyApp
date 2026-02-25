@@ -1,6 +1,7 @@
 import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 import "./global.css";
+import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -15,21 +16,19 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-
-  const backgroundColor = useThemeColor({}, 'background');
-  const colorScheme = useColorScheme();
-
   return (
     <GestureHandlerRootView style={{
       flex: 1,
-      backgroundColor: backgroundColor
+      backgroundColor: '#121212' 
     }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        
-    <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ headerShown: false }} />
-    </QueryClientProvider>
-        <StatusBar style="auto" />
+      <ThemeProvider value={DarkTheme}> 
+        <QueryClientProvider client={queryClient}>
+          <Stack screenOptions={{ 
+            headerShown: false,
+            contentStyle: { backgroundColor: '#121212' } 
+          }} />
+        </QueryClientProvider>
+        <StatusBar style="light" />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

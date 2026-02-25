@@ -9,8 +9,9 @@ const TabsLayout = () => {
       tabBarActiveTintColor: '#1DB954',
       tabBarInactiveTintColor: 'gray',
       tabBarStyle: {
-        backgroundColor: '#000000',
+        backgroundColor: '#000000', 
         borderTopWidth: 0,
+        elevation: 0, 
       },
       headerShown: false,
     }}>
@@ -21,6 +22,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ color }) => <Ionicons size={28} name="home-outline" color={color} />,
         }}
       />
+     
       <Tabs.Screen
         name="(busqueda)/index"
         options={{
@@ -51,6 +53,10 @@ const TabsLayout = () => {
         }}
       />
 
+   <Tabs.Screen
+        name="(biblioteca)/(capitulo)/[id]"
+        options={{ href: null }}
+      />
       <Tabs.Screen
         name="(biblioteca)/(playlist)/[id]"
         options={{ href: null }}

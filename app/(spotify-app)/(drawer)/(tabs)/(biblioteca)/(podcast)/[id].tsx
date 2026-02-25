@@ -8,7 +8,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function PodcastScreen() {
-   const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
   const idpodcast = Array.isArray(id) ? id[0] : id;
 
   const { data: capitulos, isLoading, isError } = useQuery({
@@ -21,7 +21,7 @@ export default function PodcastScreen() {
     return (
       <View className="flex-1 justify-center items-center">
         <ActivityIndicator size="large" color="#0000ff" />
-        <Text>cargando playist...</Text>
+        <Text>cargando podcast...</Text>
       </View>
     );
   }
@@ -44,16 +44,16 @@ export default function PodcastScreen() {
           headerStyle: { backgroundColor: '#1DB954' } 
         }} 
       />
-      <TouchableOpacity
-                   className="flex-row items-center"
-                   onPress={() => router.back()}
-                 >
-                   <Ionicons name="arrow-back" size={28} color="white" />
-                 </TouchableOpacity>
-              <ThemedText type='title' className="mb-6">Canciones</ThemedText>
+      
+      <View className="px-5 flex-1 mt-2">
+        <TouchableOpacity
+          className="flex-row items-center mb-4"
+          onPress={() => router.back()}
+        >
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
 
-      <View className="px-5 flex-1">
-        <ThemedText type='title' className="mb-6">Capitulos</ThemedText>
+        <ThemedText type='title' className="mb-4">Capítulos</ThemedText>
 
         <FlatList
           data={capitulos}
@@ -61,17 +61,21 @@ export default function PodcastScreen() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => (
             <View className="py-10 items-center">
-              <Text className="text-white text-lg font-bold">no hay cancioes</Text>
+              <Text className="text-white text-lg font-bold">no hay capítulos</Text>
             </View>
           )}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity className="flex-row items-center mb-4 active:bg-zinc-800 p-2 rounded">
+          renderItem={({ item }) => (
+           <TouchableOpacity className="flex-row items-center mb-5 active:bg-zinc-800 p-2 rounded-md"
+              onPress={() => router.push(`/(biblioteca)/(capitulo)/${item.id}` as any)}
+            >
               
-              <Text className="text-gray-400 mr-4 font-bold">{index + 1}</Text>
+              <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-md">
+                <Ionicons name="play" size={30} color="white" />
+              </View>
 
-              <View className="flex-1">
-           
+              <View className="ml-4 flex-1">
                 <Text className="text-white text-lg font-bold" numberOfLines={1}>{item.titulo}</Text>
+                <Text className="text-gray-500">capítulo</Text>
               </View>
 
             </TouchableOpacity>

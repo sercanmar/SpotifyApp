@@ -7,32 +7,37 @@ import { LogoutIconButton } from '@/presentation/auth/components/LogoutIconButto
 
 const DrawerLayout = () => {
   return (
-    <Drawer 
-    drawerContent={CustomDrawer}
-    screenOptions={{
-      headerShown: true, 
-      drawerActiveTintColor: '#1DB954', // Vverde Spotify
-      drawerInactiveTintColor: 'white',
-      drawerStyle: {
-        backgroundColor: '#121212', 
-      }
-    }}>
+    <Drawer
+      drawerContent={CustomDrawer}
+      screenOptions={{
+        headerShown: true,
+        drawerActiveTintColor: '#1DB954', // Vverde Spotify
+        drawerInactiveTintColor: 'white',
+        drawerStyle: {
+          backgroundColor: '#121212',
+        },
+        headerStyle: {
+        backgroundColor: '#121212',
+        elevation: 0, 
+        shadowOpacity: 0, 
+      },
+      headerTintColor: 'white',
+      }}>
       <Drawer.Screen
         name="(tabs)"
         options={{
-          drawerLabel: 'Inicio',
-          
-          title: 'Inicio',
+          drawerLabel: 'Inicio', 
+          headerTitle: '',
           drawerIcon: ({ color, size }) => (
             <Ionicons name='home-outline' color={color} size={size} />
           )
         }}
       />
-        
-               
-                 
-                 
-        
+
+
+
+
+
       <Drawer.Screen
         name="configuracion/index"
         options={{
@@ -43,7 +48,7 @@ const DrawerLayout = () => {
           )
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name="perfil/index"
         options={{
           drawerLabel: 'Perfil',
@@ -54,7 +59,7 @@ const DrawerLayout = () => {
         }}
       />
 
-       <Drawer.Screen
+      <Drawer.Screen
         name="suscripciones/index"
         options={{
           drawerLabel: 'Suscripciones',
@@ -64,14 +69,14 @@ const DrawerLayout = () => {
           )
         }}
       />
-      
-       
-           
-          
 
-      
-      
-      
+
+
+
+
+
+
+
     </Drawer>
   );
 }

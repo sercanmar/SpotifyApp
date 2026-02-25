@@ -52,7 +52,10 @@ export const getConfiguracion = async (id: string) => {
     const { data } = await spotifyApi.get(`/usuarios/${id}/configuracion`);
     return typeof data === 'string' ? JSON.parse(data) : data;
 };
-
+export const putCancionGuardada = async (userId: string, cancionId: string): Promise<any> => {
+  const { data } = await spotifyApi.put<any>(`/usuarios/${userId}/canciones-guardadas/${cancionId}`);
+  return typeof data === 'string' ? JSON.parse(data) : data;
+};
 export const putConfig = async (id: string, configuracion: any) => {
     try {
         const { data } = await spotifyApi.put(`/usuarios/${id}/configuracion`, configuracion);

@@ -13,10 +13,10 @@ export const getAlbumesSeguidos = async (userId: string): Promise<Album[]> => {
 
 export const getCancionesSeguidas = async (userId: string): Promise<Cancion[]> => {
   const { data } = await spotifyApi.get<any[]>(`/usuarios/${userId}/canciones-guardadas`);
-  
+
 
   const canciones = data.map(item => item.cancion ? item.cancion : item);
-  
+
   return canciones;
 };
 
@@ -32,8 +32,8 @@ export const getArtistasSeguidos = async (userId: string): Promise<Artista[]> =>
 
 export const getCancionesPlaylist = async (id: string): Promise<Cancion[]> => {
   const { data } = await spotifyApi.get<any[]>(`/playlists/${id}/canciones`);
-  const canciones=data.map(item=>item.cancion)
-  
+  const canciones = data.map(item => item.cancion)
+
   return canciones;
 };
 
@@ -61,14 +61,25 @@ export const getAlbumes = async (): Promise<Album[]> => {
   const { data } = await spotifyApi.get<any>('/albums');
   return typeof data === 'string' ? JSON.parse(data) : data;
 };
+export const getCanciones = async (): Promise<Cancion[]> => {
+  const { data } = await spotifyApi.get<any>('/canciones');
+  return typeof data === 'string' ? JSON.parse(data) : data;
+};
 
 export const getCancionesAlbum = async (id: string): Promise<Cancion[]> => {
-  const { data } = await spotifyApi.get<any>(`/albums/${id}/canciones`);  
+  const { data } = await spotifyApi.get<any>(`/albums/${id}/canciones`);
   return typeof data === 'string' ? JSON.parse(data) : data;
 };
 
 export const getArtistaAlbum = async (id: string): Promise<Album[]> => {
   const { data } = await spotifyApi.get<any>(`/artistas/${id}/albums`);
-  
+
   return typeof data === 'string' ? JSON.parse(data) : data;
+};
+export const getCapitulo = async (id: string): Promise<any> => {
+  const { data } = await spotifyApi.get<any>(`/capitulos/${id}`);
+  
+  const datosParseados = typeof data === 'string' ? JSON.parse(data) : data;
+  
+  return Array.isArray(datosParseados) ? datosParseados[0] : datosParseados;
 };

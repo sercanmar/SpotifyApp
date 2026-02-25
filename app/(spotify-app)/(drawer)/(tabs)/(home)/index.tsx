@@ -1,12 +1,9 @@
 import React from 'react';
 import { View, Text, FlatList, ActivityIndicator, ScrollView, Pressable, Image } from 'react-native';
-import { ThemedText } from '@/presentation/theme/components/themed-text';
-import { ThemedView } from '@/presentation/theme/components/themed-view';
-import { Link, useNavigation, router } from 'expo-router';
+import { router } from 'expo-router';
 import { getAlbumesSeguidos, getCancionesSeguidas, getPlaylistSeguidas } from '@/core/auth/actions/spotify.action';
 import { useQuery } from '@tanstack/react-query';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { DrawerActions } from '@react-navigation/native';
 import { useAuthStore } from '@/presentation/auth/store/useAuthStore';
 
 export default function HomeScreen() {
@@ -31,36 +28,31 @@ export default function HomeScreen() {
     enabled: !!user?.id,
   });
 
-  const navigation = useNavigation();
-  const onToogleDrawer = () => {
-    navigation.dispatch(DrawerActions.toggleDrawer)
-  }
-
   if (isLoading) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>cargando datos</Text>
+      <View className="flex-1 justify-center items-center bg-[#121212]">
+        <ActivityIndicator size="large" color="#1DB954" />
+        <Text className="text-white mt-2">cargando datos</Text>
       </View>
     );
   }
 
   if (isError) {
     return (
-      <View className="flex-1 justify-center items-center">
+      <View className="flex-1 justify-center items-center bg-[#121212]">
         <Text className="text-red-500">error al cargar los datos</Text>
       </View>
     );
   }
   
   return (
-   <SafeAreaView className="flex-1 bg-white ">
-    <ThemedView className="flex-1 px-5 ">
+   <SafeAreaView className="flex-1 bg-[#121212]">
+    <View className="flex-1 px-5">
 
-     <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false}>
+     <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         
         <View className="mb-8">
-          <Text className="text-black text-xl font-bold mb-4">Tus playlists</Text>
+          <Text className="text-white text-xl font-bold mb-4">Tus playlists</Text>
           
           <FlatList
             data={playlists}
@@ -92,7 +84,7 @@ export default function HomeScreen() {
           
 
         <View className="mb-8">
-          <Text className="text-black text-xl font-bold mb-4">Tus Albumse</Text>
+          <Text className="text-white text-xl font-bold mb-4">Tus Álbumes</Text>
           
           <FlatList
             data={albumes}
@@ -123,7 +115,7 @@ export default function HomeScreen() {
         </View>
 
         <View className="mb-8">
-          <Text className="text-black text-xl font-bold mb-4">Tus Canciones</Text>
+          <Text className="text-white text-xl font-bold mb-4">Tus Canciones</Text>
           
           <FlatList
             data={canciones}
@@ -156,8 +148,7 @@ export default function HomeScreen() {
 
       </ScrollView>
 
-    </ThemedView>
-
+    </View>
    </SafeAreaView>
   );
-};
+}

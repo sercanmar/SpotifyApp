@@ -8,7 +8,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function PlaylistScreen() {
-   const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
   const idplaylist = Array.isArray(id) ? id[0] : id;
 
   const { data: canciones, isLoading, isError } = useQuery({
@@ -21,7 +21,7 @@ export default function PlaylistScreen() {
     return (
       <View className="flex-1 justify-center items-center">
         <ActivityIndicator size="large" color="#0000ff" />
-        <Text>cargando playist...</Text>
+        <Text>cargando playlist...</Text>
       </View>
     );
   }
@@ -45,14 +45,14 @@ export default function PlaylistScreen() {
         }} 
       />
      
-      <View className="px-5 flex-1">
+      <View className="px-5 flex-1 mt-2">
         <TouchableOpacity
-             className="flex-row items-center"
-             onPress={() => router.back()}
-           >
-             <Ionicons name="arrow-back" size={28} color="white" />
-           </TouchableOpacity>
-        <ThemedText type='title' className="mb-6">Canciones</ThemedText>
+          className="flex-row items-center mb-4"
+          onPress={() => router.back()}
+        >
+          <Ionicons name="arrow-back" size={28} color="white" />
+        </TouchableOpacity>
+        <ThemedText type='title' className="mb-4">Canciones</ThemedText>
 
         <FlatList
           data={canciones}
@@ -60,17 +60,19 @@ export default function PlaylistScreen() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => (
             <View className="py-10 items-center">
-              <Text className="text-white text-lg font-bold">no hay cancioes</Text>
+              <Text className="text-white text-lg font-bold">no hay canciones</Text>
             </View>
           )}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity className="flex-row items-center mb-4 active:bg-zinc-800 p-2 rounded">
+          renderItem={({ item }) => (
+            <TouchableOpacity className="flex-row items-center mb-5 active:bg-zinc-800 p-2 rounded-md">
               
-              <Text className="text-gray-400 mr-4 font-bold">{index + 1}</Text>
+              <View className="w-16 h-16 bg-[#333333] justify-center items-center rounded-md">
+                <Ionicons name="musical-notes" size={30} color="white" />
+              </View>
 
-              <View className="flex-1">
-           
+              <View className="ml-4 flex-1">
                 <Text className="text-white text-lg font-bold" numberOfLines={1}>{item.titulo}</Text>
+                <Text className="text-gray-500">canción</Text>
               </View>
 
             </TouchableOpacity>
